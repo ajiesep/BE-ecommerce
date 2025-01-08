@@ -8,6 +8,7 @@ import {
   AllOrder,
   DetailOrder,
   CurrentUserOrder,
+  callbackPayment,
 } from "../controllers/OrderController.js";
 
 const router = express.Router();
@@ -27,5 +28,8 @@ router.get("/:id", protectedMiddleware, adminMiddleware, DetailOrder);
 // get /api/v1/order/current/user
 // cuman diakses oleh user auth
 router.get("/current/user", protectedMiddleware, CurrentUserOrder);
+
+// post /api/v1/order/callback/midtrans
+router.post("/current/midtrans", callbackPayment);
 
 export default router;
