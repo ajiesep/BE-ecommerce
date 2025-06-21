@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
+const lapanganSchema = new Schema({
   name: {
     type: String,
-    required: [true, "Name Product is required"],
-    unique: [true, "Product already exists"],
+    required: [true, "Name Lapangan is required"],
+    unique: [true, "Lapangan already exists"],
   },
   price: {
     type: Number,
@@ -13,7 +13,7 @@ const productSchema = new Schema({
   },
   description: {
     type: String,
-    required: [true, "Description Product is required"],
+    required: [true, "Description Lapangan is required"],
   },
   image: {
     type: String,
@@ -21,7 +21,7 @@ const productSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ["sepatu", "kemeja", "baju", "celana"],
+    enum: ["Lapangan A", "Lapangan B", "Lapangan C", "Lapangan D"],
   },
   stock: {
     type: Number,
@@ -29,6 +29,6 @@ const productSchema = new Schema({
   },
 });
 
-const Product = mongoose.model("Product", productSchema);
+const Lapangan = mongoose.model("Lapangan", lapanganSchema);
 
-export default Product;
+export default Lapangan;

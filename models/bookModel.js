@@ -1,23 +1,23 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const singleProduct = Schema({
+const singleLapangan = Schema({
   name: { type: String, required: true },
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
-  product: {
+  lapangan: {
     type: mongoose.Schema.ObjectId,
-    ref: "Product",
+    ref: "Lapangan",
     required: true,
   },
 });
 
-const orderSchema = new Schema({
+const bookSchema = new Schema({
   total: {
     type: Number,
     required: [true, "Total is required"],
   },
-  itemsDetail: [singleProduct],
+  itemsDetail: [singleLapangan],
   user: {
     type: Schema.ObjectId,
     ref: "User",
@@ -46,6 +46,6 @@ const orderSchema = new Schema({
   },
 });
 
-const Order = mongoose.model("Order", orderSchema);
+const Book = mongoose.model("Book", bookSchema);
 
-export default Order;
+export default Book;

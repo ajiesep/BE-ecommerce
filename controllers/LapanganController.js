@@ -1,18 +1,18 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
-import Product from "../models/productModel.js";
+import Lapangan from "../models/lapanganModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import streamifier from "streamifier";
 
-export const CreateProduct = asyncHandler(async (req, res) => {
-  const newProduct = await Product.create(req.body);
+export const CreateLapangan = asyncHandler(async (req, res) => {
+  const newLapangan = await Lapangan.create(req.body);
 
   return res.status(201).json({
-    message: "Product created",
-    data: newProduct,
+    message: "Lapangan created",
+    data: newLapangan,
   });
 });
 
-export const AllProduct = asyncHandler(async (req, res) => {
+export const AllLapangan = asyncHandler(async (req, res) => {
   // Req Query
   const queryObj = { ...req.query };
 
@@ -20,12 +20,12 @@ export const AllProduct = asyncHandler(async (req, res) => {
   const excludeFields = ["page", "limit", "name"];
   excludeFields.forEach((element) => delete queryObj[element]);
 
-  let query = Product.find(queryObj);
+  let query = Lapangan.find(queryObj);
 
   if (req.query.name) {
-    query = Product.find({ name: { $regex: req.query.name, $options: "i" } });
+    query = Lapangan.find({ name: { $regex: req.query.name, $options: "i" } });
   } else {
-    query = Product.find(queryObj);
+    query = Lapangan.find(queryObj);
   }
 
   // Pagination
@@ -35,58 +35,58 @@ export const AllProduct = asyncHandler(async (req, res) => {
 
   query = query.skip(skipData).limit(limitData);
 
-  let countProduct = await Product.countDocuments(queryObj);
+  let countLapangan = await Lapangan.countDocuments(queryObj);
 
   if (req.query.page) {
-    if (skipData >= countProduct) {
+    if (skipData >= countLapangan) {
       res.status(404);
       throw new Error("This page does not exist");
     }
   }
 
   const data = await query;
-  const totalPage = Math.ceil(countProduct / limitData);
+  const totalPage = Math.ceil(countLapangan / limitData);
 
   return res.status(200).json({
-    message: "Berhasil tampil semua product",
+    message: "Berhasil tampil semua lapangan",
     data,
-    pagination: { totalPage, page, totalProduct: countProduct },
+    pagination: { totalPage, page, totalLapangan: countLapangan },
   });
 });
 
-export const detailProduct = asyncHandler(async (req, res) => {
+export const detailLapangan = asyncHandler(async (req, res) => {
   const paramsId = req.params.id;
-  const productData = await Product.findById(paramsId);
+  const lapanganData = await Lapangan.findById(paramsId);
 
-  if (!productData) {
+  if (!lapanganData) {
     res.status(404);
     throw new Error("Id tidak ditemukan");
   }
 
   return res.status(200).json({
-    message: "Detail data product berhasil ditampilkan",
-    data: productData,
+    message: "Detail data lapangan berhasil ditampilkan",
+    data: lapanganData,
   });
 });
 
-export const updateProduct = asyncHandler(async (req, res) => {
+export const updateLapangan = asyncHandler(async (req, res) => {
   const paramsId = req.params.id;
-  const updateProduct = await Product.findByIdAndUpdate(paramsId, req.body, {
+  const updateLapangan = await Lapangan.findByIdAndUpdate(paramsId, req.body, {
     runValidators: false,
     new: true,
   });
   return res.status(201).json({
-    message: "Update product berhasil",
-    data: updateProduct,
+    message: "Update lapangan berhasil",
+    data: updateLapangan,
   });
 });
 
-export const deleteProduct = asyncHandler(async (req, res) => {
+export const deleteLapangan = asyncHandler(async (req, res) => {
   const paramsId = req.params.id;
-  await Product.findByIdAndDelete(paramsId);
+  await Lapangan.findByIdAndDelete(paramsId);
 
   return res.status(200).json({
-    message: "Product berhasil dihapus",
+    message: "Lapangan berhasil dihapus",
   });
 });
 

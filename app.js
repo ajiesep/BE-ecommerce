@@ -27,13 +27,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public"));
 
 import authRouter from "./routes/authRouter.js";
-import productRouter from "./routes/productRouter.js";
-import orderRouter from "./routes/orderRouter.js";
+import lapanganRouter from "./routes/lapanganRouter.js";
+import bookRouter from "./routes/bookRouter.js";
 
 // Parent Router
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/product", productRouter);
-app.use("/api/v1/order", orderRouter);
+app.use("/api/v1/lapangan", lapanganRouter);
+app.use("/api/v1/book", bookRouter);
 
 app.use(notFound);
 app.use(errorHandler);
